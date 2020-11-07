@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Styles from './index.module.scss';
+import Steps from './steps';
 
 class RegistrationSteps extends Component {
   render() {
@@ -8,6 +9,7 @@ class RegistrationSteps extends Component {
     return (
       <div className={classes.join()}>
           <section className={Styles['steps-bar']}>
+            <Steps />
           </section>
           <section className={Styles['form']}>
           </section>
