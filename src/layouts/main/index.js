@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Styles from './index.module.scss';
+import RegistrationSteps from '../../components/registration-steps';
 
 class Main extends Component {
   render() {
@@ -11,6 +12,7 @@ class Main extends Component {
           <section className={Styles['header']}>
           </section>
           <section className={Styles['main']}>
+            <RegistrationSteps />
           </section>
         </section>
       </div>
