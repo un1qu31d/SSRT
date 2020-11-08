@@ -1,0 +1,123 @@
+@import '../../../config.scss';
+
+.form {
+  display: grid;
+  gap: 12px;
+  .header {
+    .title {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #324356;
+    }
+  }
+  .main {
+    border-radius: 4px;
+    padding: 12px;
+    background-color: #fff;
+    .title {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #324356;
+    }
+    .items {
+      display: grid;
+      gap: 8px 12px;
+      grid-template-columns: repeat(2, 1fr);
+      .item {
+        display: grid;
+        gap: 2px;
+        min-width: 240px;
+        .field {
+          display: grid;
+          gap: 2px;
+          border: 1px solid #d4d4d4;
+          border-radius: 4px;
+          padding: 4px 8px;
+          .label {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #324356dd;
+          }
+          .input {
+            input, select, option {
+              box-sizing: border-box;
+              margin: 0;
+              outline-width: 0;
+              border-width: 0;
+              width: 100%;
+              padding: 0;
+              color: #324356;
+            &.status--empty, &::placeholder {
+              color: #d4d4d4;
+            }
+            }
+          }
+        }
+        .note {
+          font-size: 0.8rem;
+          color: #324356;
+        }
+      &.size--full {
+        grid-column-start: 1;
+        grid-column-end: span 2;
+      }
+      &.theme--error {
+        .field {
+          border-color: red;
+          .label {
+            color: red;
+          }
+        }
+        .note {
+          color: red;
+        }
+      }
+      }
+    }
+  }
+  .footer {
+    display: grid;
+    gap: 32px;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    align-items: center;
+    .links {
+      .link {
+        display: grid;
+        gap: 2px;
+        grid-auto-flow: column;
+        align-items: center;
+        font-size: 0.8rem;
+        color: #324356;
+      &::before {
+        content: '';
+        display: inline-block;
+        border: 5px solid transparent;
+        border-left-width: 0;
+        border-right-color: #324356;
+      }
+      &:hover {
+        text-decoration: underline;
+      }
+      }
+    }
+    .options {
+      margin: -8px;
+      display: flex;
+      .option {
+        cursor: pointer;
+        box-sizing: border-box;
+        margin: 8px;
+        border-radius: 4px;
+        text-align: center;
+      &.type--primary {
+        padding: 4px 16px;
+        min-width: 160px;
+        background-color: $primaryColor;
+        color: #fff;
+      }
+      }
+    }
+  }
+}

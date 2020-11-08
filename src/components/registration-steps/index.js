@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Styles from './index.module.scss';
+import AccountFrom from './form/account';
 import Steps from './steps';
 
 class RegistrationSteps extends Component {
@@ -12,6 +13,7 @@ class RegistrationSteps extends Component {
             <Steps />
           </section>
           <section className={Styles['form']}>
+            <AccountFrom />
           </section>
       </div>
     )
