@@ -1,13 +1,22 @@
 import React, {Component} from 'react';
 import Styles from './index.module.scss';
+import validator from 'validator';
 
 class AccountForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      submitting: false
+      submitting: false,
+      countryCode: '+'
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleFullNameChange = this.handleFullNameChange.bind(this);
+    this.handleBusinessEmailChange = this.handleBusinessEmailChange.bind(this);
+    this.handleCountryChange = this.handleCountryChange.bind(this);
+    this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleRepeatedPasswordChange = this.handleRepeatedPasswordChange.bind(this);
   }
 
   handleSubmit() {
@@ -17,8 +26,69 @@ class AccountForm extends Component {
     }));
   }
 
+  handleInputChange(item, value) {
+    const {onInputChange} = this.props;
+    onInputChange('account', item, value);
+  }
+
+  handleFullNameChange(event) {
+    this.handleInputChange('fullName', event.target.value);
+  }
+
+  handleBusinessEmailChange(event) {
+    this.handleInputChange('businessEmail', event.target.value);
+  }
+
+  handleCountryChange(event) {
+    this.handleInputChange('country', event.target.value);
+  }
+
+  handlePhoneNumberChange(event) {
+    this.handleInputChange('phoneNumber', event.target.value);
+  }
+
+  handlePasswordChange(event) {
+    this.handleInputChange('password', event.target.value);
+  }
+
+  handleRepeatedPasswordChange(event) {
+    this.handleInputChange('repeatedPassword', event.target.value);
+  }
+
+  validateFullName(value) {
+    if (!value) return false;
+    return true;
+  }
+
+  validateBusinessEmail(value) {
+    if (!value) return false;
+    if (!validator.isEmail(value)) return false;
+    return true;
+  }
+
+  validateCountry(value) {
+    if (!value) return false;
+    return true;
+  }
+
+  validatePhoneNumber(value) {
+    if (!value) return false;
+    return true;
+  }
+
+  validatePassword(value) {
+    if (!value) return false;
+    return true;
+  }
+
+  validateRepeatedPassword(value) {
+    if (!value) return false;
+    return true;
+  }
+
   render() {
-    const {submitting} = this.state;
+    const {submitting, countryCode} = this.state;
+    const {inputs} = this.props
     const classes = [];
     classes.push(Styles['form']);
     return (
@@ -30,117 +100,173 @@ class AccountForm extends Component {
         </div>
         <div className={Styles['main']}>
           <div className={Styles['items']}>
-            <div className={`${Styles['item']} ${Styles['size--full']} ${submitting ? Styles['theme--error'] : ''}`}>
-              <div className={Styles['field']}>
-                <div className={Styles['label']}>
-                  FULL NAME
+            {(() => {
+              const itemClasses = [Styles['item']];
+              itemClasses.push(Styles['size--full']);
+              if (submitting && !this.validateFullName(inputs['fullName'])) itemClasses.push(Styles['theme--error']);
+              return (
+                <div className={itemClasses.join(' ')}>
+                  <div className={Styles['field']}>
+                    <div className={Styles['label']}>
+                      FULL NAME
+                    </div>
+                    <div className={Styles['input']}>
+                      <input
+                        type="text"
+                        placeholder="Enter Your full name"
+                        value={inputs['fullName']}
+                        onChange={this.handleFullNameChange}
+                      />
+                    </div>
+                  </div>
+                  {submitting && (
+                  <div className={Styles['note']}>
+                    Please Enter your full name
+                  </div>
+                  )}
                 </div>
-                <div className={Styles['input']}>
-                  <input
-                    type="text"
-                    placeholder="Enter Your full name"
-                  />
+              )
+            })()}
+            {(() => {
+              const itemClasses = [Styles['item']];
+              itemClasses.push(Styles['size--full']);
+              if (submitting && !this.validateBusinessEmail(inputs['businessEmail'])) itemClasses.push(Styles['theme--error']);
+              return (
+                <div className={itemClasses.join(' ')}>
+                  <div className={Styles['field']}>
+                    <div className={Styles['label']}>
+                      BUSINESS EMAIL
+                    </div>
+                    <div className={Styles['input']}>
+                      <input
+                        type="text"
+                        placeholder="Enter Your business email"
+                        value={inputs['businessEmail']}
+                        onChange={this.handleBusinessEmailChange}
+                      />
+                    </div>
+                  </div>
+                  {submitting && (
+                  <div className={Styles['note']}>
+                    Please Enter your business email
+                  </div>
+                  )}
                 </div>
-              </div>
-              {submitting && (
-              <div className={Styles['note']}>
-                Please Enter your full name
-              </div>
-              )}
-            </div>
-            <div className={`${Styles['item']} ${Styles['size--full']} ${submitting ? Styles['theme--error'] : ''}`}>
-              <div className={Styles['field']}>
-                <div className={Styles['label']}>
-                  BUSINESS EMAIL
+              )
+            })()}
+            {(() => {
+              const itemClasses = [Styles['item']];
+              if (submitting && !this.validateCountry(inputs['country'])) itemClasses.push(Styles['theme--error']);
+              return (
+                <div className={itemClasses.join(' ')}>
+                  <div className={Styles['field']}>
+                    <div className={Styles['label']}>
+                      COUNTRY
+                    </div>
+                    <div className={Styles['input']}>
+                      <select
+                        className={Styles['status--empty']}
+                        defaultValue=""
+                        value={inputs['country']}
+                        onChange={this.handleCountryChange}
+                      >
+                        <option value="" hidden>Select Your country</option>
+                        <option value="egypt">Egypt</option>
+                      </select>
+                    </div>
+                  </div>
+                  {submitting && (
+                  <div className={Styles['note']}>
+                    Please Select your country
+                  </div>
+                  )}
                 </div>
-                <div className={Styles['input']}>
-                  <input
-                    type="text"
-                    placeholder="Enter Your business email"
-                  />
+              )
+            })()}
+            {(() => {
+              const itemClasses = [Styles['item']];
+              itemClasses.push(Styles['type--prefix']);
+              if (submitting && !this.validatePhoneNumber(inputs['phoneNumber'])) itemClasses.push(Styles['theme--error']);
+              return (
+                <div className={itemClasses.join(' ')}>
+                  <div className={Styles['field']}>
+                    <div className={Styles['affix']}>
+                      {countryCode}
+                    </div>
+                    <div className={Styles['label']}>
+                      PHONE NUMBER
+                    </div>
+                    <div className={Styles['input']}>
+                      <input
+                        type="text"
+                        placeholder="Enter Your phone number"
+                        value={inputs['phoneNumber']}
+                        onChange={this.handlePhoneNumberChange}
+                      />
+                    </div>
+                  </div>
+                  {submitting && (
+                  <div className={Styles['note']}>
+                    Please Enter your phone number
+                  </div>
+                  )}
                 </div>
-              </div>
-              {submitting && (
-              <div className={Styles['note']}>
-                Please Enter your business email
-              </div>
-              )}
-            </div>
-            <div className={`${Styles['item']} ${submitting ? Styles['theme--error'] : ''}`}>
-              <div className={Styles['field']}>
-                <div className={Styles['label']}>
-                  COUNTRY
+              )
+            })()}
+            {(() => {
+              const itemClasses = [Styles['item']];
+              itemClasses.push(Styles['size--full']);
+              if (submitting && !this.validatePassword(inputs['password'])) itemClasses.push(Styles['theme--error']);
+              return (
+                <div className={itemClasses.join(' ')}>
+                  <div className={Styles['field']}>
+                    <div className={Styles['label']}>
+                      PASSWORD
+                    </div>
+                    <div className={Styles['input']}>
+                      <input
+                        type="text"
+                        placeholder="Enter Your password"
+                        value={inputs['password']}
+                        onChange={this.handlePasswordChange}
+                      />
+                    </div>
+                  </div>
+                  {submitting && (
+                  <div className={Styles['note']}>
+                    Please Enter your password
+                  </div>
+                  )}
                 </div>
-                <div className={Styles['input']}>
-                  <select
-                    defaultValue=""
-                    className={Styles['status--empty']}
-                  >
-                    <option value="" hidden>Select Your country</option>
-                    <option value="egypt">Egypt</option>
-                  </select>
+              )
+            })()}
+            {(() => {
+              const itemClasses = [Styles['item']];
+              itemClasses.push(Styles['size--full']);
+              if (submitting && !this.validateRepeatedPassword(inputs['repeatedPassword'])) itemClasses.push(Styles['theme--error']);
+              return (
+                <div className={itemClasses.join(' ')}>
+                  <div className={Styles['field']}>
+                    <div className={Styles['label']}>
+                      REPEAT PASSWORD
+                    </div>
+                    <div className={Styles['input']}>
+                      <input
+                        type="text"
+                        placeholder="Enter Your password again"
+                        value={inputs['repeatedPassword']}
+                        onChange={this.handleRepeatedPasswordChange}
+                      />
+                    </div>
+                  </div>
+                  {submitting && (
+                  <div className={Styles['note']}>
+                    Please Enter your password again
+                  </div>
+                  )}
                 </div>
-              </div>
-              {submitting && (
-              <div className={Styles['note']}>
-                Please Select your country
-              </div>
-              )}
-            </div>
-            <div className={`${Styles['item']} ${submitting ? Styles['theme--error'] : ''}`}>
-              <div className={Styles['field']}>
-                <div className={Styles['label']}>
-                  PHONE NUMBER
-                </div>
-                <div className={Styles['input']}>
-                  <input
-                    type="text"
-                    placeholder="Enter Your phone number"
-                  />
-                </div>
-              </div>
-              {submitting && (
-              <div className={Styles['note']}>
-                Please Enter your phone number
-              </div>
-              )}
-            </div>
-            <div className={`${Styles['item']} ${Styles['size--full']} ${submitting ? Styles['theme--error'] : ''}`}>
-              <div className={Styles['field']}>
-                <div className={Styles['label']}>
-                  PASSWORD
-                </div>
-                <div className={Styles['input']}>
-                  <input
-                    type="text"
-                    placeholder="Enter Your password"
-                  />
-                </div>
-              </div>
-              {submitting && (
-              <div className={Styles['note']}>
-                Please Enter your password
-              </div>
-              )}
-            </div>
-            <div className={`${Styles['item']} ${Styles['size--full']} ${submitting ? Styles['theme--error'] : ''}`}>
-              <div className={Styles['field']}>
-                <div className={Styles['label']}>
-                  REPEAT PASSWORD
-                </div>
-                <div className={Styles['input']}>
-                  <input
-                    type="text"
-                    placeholder="Enter Your password again"
-                  />
-                </div>
-              </div>
-              {submitting && (
-              <div className={Styles['note']}>
-                Please Enter your password again
-              </div>
-              )}
-            </div>
+              )
+            })()}
           </div>
         </div>
         <div className={Styles['footer']}>

@@ -27,7 +27,7 @@
       .item {
         display: grid;
         gap: 2px;
-        min-width: 240px;
+        min-width: 25vw;
         .field {
           display: grid;
           gap: 2px;
@@ -62,16 +62,75 @@
         grid-column-start: 1;
         grid-column-end: span 2;
       }
+      &.type--prefix, &.type--suffix  {
+        .field {
+          gap: 2px 17px;
+          .affix {
+            position: relative;
+            grid-area: field-affix;
+            display: grid;
+            place-content: center;
+            margin: -4px -8px;
+            padding: 4px 8px;
+            color: #324356dd;
+            &::after {
+              content: '';
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              width: 1px;
+              background-color: #d4d4d4;
+            }
+          }
+          .label {
+            grid-area: field-label;
+          }
+          .input {
+            grid-area: field-input;
+          }
+        }
+      }
+      &.type--prefix {
+        .field {
+          grid-template-areas: "field-affix field-label" "field-affix field-input";
+          grid-template-columns: max-content 1fr;
+          .affix {
+            &::after {
+              right: -1px;
+            }
+          }
+        }
+      }
+      &.type--suffix  {
+        .field {
+          grid-template-areas: "field-label field-affix" "field-input field-affix";
+          grid-template-columns: 1fr max-content;
+          .affix {
+            &::after {
+              left: -1px;
+            } 
+          }
+        }
+      }
       &.theme--error {
         .field {
-          border-color: red;
+          border-color: $highlightedColor;
           .label {
-            color: red;
+            color: $highlightedColor;
           }
         }
         .note {
-          color: red;
+          color: $highlightedColor;
         }
+      &.type--prefix, &.type--suffix {
+        .field {
+          .affix {
+            &::after {
+              background-color: $highlightedColor;
+            }
+          }
+        }
+      }
       }
       }
     }
@@ -89,6 +148,7 @@
         grid-auto-flow: column;
         align-items: center;
         font-size: 0.8rem;
+        line-height: 0.8rem;
         color: #324356;
       &::before {
         content: '';
