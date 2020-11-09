@@ -1,6 +1,9 @@
 @import '../../../config.scss';
 
-$iconSize: 2rem;
+$iconSize: 56px;
+$iconBorderWidth: 2px;
+$barHeight: 28px;
+$barBorderWidth: 8px;
 
 .steps {
   position: relative;
@@ -9,14 +12,14 @@ $iconSize: 2rem;
   justify-content: space-between;
   .bar {
     position: absolute;
-    top: calc((#{$iconSize} - 24px) / 2);
+    top: (($iconSize - $barHeight) / 2);
     left: ($iconSize / 2);
     right: ($iconSize / 2);
     box-sizing: border-box;
-    border: 8px solid #fff;
+    border: $barBorderWidth solid #fff;
     border-right-width: 0;
     border-left-width: 0;
-    height: 24px;
+    height: $barHeight;
     .progress {
       position: absolute;
       top: 0;
@@ -28,13 +31,13 @@ $iconSize: 2rem;
     position: relative;
     box-sizing: border-box;
     border-radius: 50%;
-    border: 1px solid #fff;
+    border: $iconBorderWidth solid #fff;
     width: $iconSize;
     height: $iconSize;
     background-color: #fff;
     text-align: center;
-    line-height: $iconSize;
-    font-size: 1rem;
+    line-height: ($iconSize - ($iconBorderWidth * 2));
+    font-size: $iconSize * 0.5;
     color: #bababa;
   &.status--current {
     border-color: $highlightedColor;
