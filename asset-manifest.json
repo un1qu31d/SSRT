@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/ssrt/static/css/main.04522251.chunk.css",
-    "main.js": "/ssrt/static/js/main.a13bd665.chunk.js",
-    "main.js.map": "/ssrt/static/js/main.a13bd665.chunk.js.map",
-    "runtime-main.js": "/ssrt/static/js/runtime-main.919c2b3d.js",
-    "runtime-main.js.map": "/ssrt/static/js/runtime-main.919c2b3d.js.map",
-    "static/js/2.c08dd007.chunk.js": "/ssrt/static/js/2.c08dd007.chunk.js",
-    "static/js/2.c08dd007.chunk.js.map": "/ssrt/static/js/2.c08dd007.chunk.js.map",
-    "static/js/3.0dca1483.chunk.js": "/ssrt/static/js/3.0dca1483.chunk.js",
-    "static/js/3.0dca1483.chunk.js.map": "/ssrt/static/js/3.0dca1483.chunk.js.map",
-    "index.html": "/ssrt/index.html",
-    "static/css/main.04522251.chunk.css.map": "/ssrt/static/css/main.04522251.chunk.css.map",
-    "static/js/2.c08dd007.chunk.js.LICENSE.txt": "/ssrt/static/js/2.c08dd007.chunk.js.LICENSE.txt",
-    "static/media/blue-mailbox.791144d7.jpg": "/ssrt/static/media/blue-mailbox.791144d7.jpg",
-    "static/media/loader.8a9de4a8.gif": "/ssrt/static/media/loader.8a9de4a8.gif"
+    "main.css": "/SSRT/static/css/main.04522251.chunk.css",
+    "main.js": "/SSRT/static/js/main.a13bd665.chunk.js",
+    "main.js.map": "/SSRT/static/js/main.a13bd665.chunk.js.map",
+    "runtime-main.js": "/SSRT/static/js/runtime-main.9270a219.js",
+    "runtime-main.js.map": "/SSRT/static/js/runtime-main.9270a219.js.map",
+    "static/js/2.c08dd007.chunk.js": "/SSRT/static/js/2.c08dd007.chunk.js",
+    "static/js/2.c08dd007.chunk.js.map": "/SSRT/static/js/2.c08dd007.chunk.js.map",
+    "static/js/3.0dca1483.chunk.js": "/SSRT/static/js/3.0dca1483.chunk.js",
+    "static/js/3.0dca1483.chunk.js.map": "/SSRT/static/js/3.0dca1483.chunk.js.map",
+    "index.html": "/SSRT/index.html",
+    "static/css/main.04522251.chunk.css.map": "/SSRT/static/css/main.04522251.chunk.css.map",
+    "static/js/2.c08dd007.chunk.js.LICENSE.txt": "/SSRT/static/js/2.c08dd007.chunk.js.LICENSE.txt",
+    "static/media/blue-mailbox.791144d7.jpg": "/SSRT/static/media/blue-mailbox.791144d7.jpg",
+    "static/media/loader.8a9de4a8.gif": "/SSRT/static/media/loader.8a9de4a8.gif"
   },
   "entrypoints": [
-    "static/js/runtime-main.919c2b3d.js",
+    "static/js/runtime-main.9270a219.js",
     "static/js/2.c08dd007.chunk.js",
     "static/css/main.04522251.chunk.css",
     "static/js/main.a13bd665.chunk.js"
