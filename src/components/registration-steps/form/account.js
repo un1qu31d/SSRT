@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import Styles from './index.module.scss';
 import validator from 'validator';
+import countries from 'country-list-js';
 
 class AccountForm extends Component {
   constructor(props) {
     super(props);
+    const {inputs} = this.props;
     this.state = {
       submitting: false,
-      countryCode: '+'
+      countryCode: `${inputs['country'] ? `+${countries.findByIso2(inputs['country'])['dialing_code']}` : '+'}`
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -20,10 +22,20 @@ class AccountForm extends Component {
   }
 
   handleSubmit() {
+    const {inputs, actions} = this.props;
     this.setState(_state => ({
       ..._state,
       submitting: true
     }));
+    const validations = {
+      fullName: this.validateFullName(inputs['fullName']),
+      businessEmail: this.validateBusinessEmail(inputs['businessEmail']),
+      country: this.validateCountry(inputs['country']),
+      phoneNumber: this.validatePhoneNumber(inputs['phoneNumber']),
+      password: this.validatePassword(inputs['password'], inputs['repeatedPassword']),
+      repeatedPassword: this.validateRepeatedPassword(inputs['password'], inputs['repeatedPassword'])
+    };
+    if (!Object.values(validations).some(_validation => _validation !== true)) actions.nextStep();
   }
 
   handleInputChange(item, value) {
@@ -41,6 +53,10 @@ class AccountForm extends Component {
 
   handleCountryChange(event) {
     this.handleInputChange('country', event.target.value);
+    this.setState(_state => ({
+      ..._state,
+      countryCode: `+${countries.findByIso2(event.target.value)['dialing_code']}`
+    }));
   }
 
   handlePhoneNumberChange(event) {
@@ -55,40 +71,53 @@ class AccountForm extends Component {
     this.handleInputChange('repeatedPassword', event.target.value);
   }
 
-  validateFullName(value) {
-    if (!value) return false;
+  validateFullName(fullName) {
+    if (!fullName) return 1;
     return true;
   }
 
-  validateBusinessEmail(value) {
-    if (!value) return false;
-    if (!validator.isEmail(value)) return false;
+  validateBusinessEmail(businessEmail) {
+    if (!businessEmail) return 1;
+    if (!validator.isEmail(businessEmail)) return 2;
+    return true;
+  }
+  
+  validateCountry(country) {
+    if (!country) return 1;
+    return true;
+  }
+  
+  validatePhoneNumber(phoneNumber) {
+    if (!phoneNumber) return 1;
+    if (!validator.isMobilePhone(phoneNumber)) return 2;
     return true;
   }
 
-  validateCountry(value) {
-    if (!value) return false;
+  validatePassword(password, repeatedPassword) {
+    if (!password) return 1;
+    if (password !== repeatedPassword) return 2;
+    if (password.length < 6) return 3;
     return true;
   }
 
-  validatePhoneNumber(value) {
-    if (!value) return false;
-    return true;
-  }
-
-  validatePassword(value) {
-    if (!value) return false;
-    return true;
-  }
-
-  validateRepeatedPassword(value) {
-    if (!value) return false;
+  validateRepeatedPassword(password, repeatedPassword) {
+    if (!repeatedPassword) return 1;
+    if (password !== repeatedPassword) return 2;
+    if (password.length < 6) return 3;
     return true;
   }
 
   render() {
     const {submitting, countryCode} = this.state;
-    const {inputs} = this.props
+    const {inputs} = this.props;
+    const validations = {
+      fullName: this.validateFullName(inputs['fullName']),
+      businessEmail: this.validateBusinessEmail(inputs['businessEmail']),
+      country: this.validateCountry(inputs['country']),
+      phoneNumber: this.validatePhoneNumber(inputs['phoneNumber']),
+      password: this.validatePassword(inputs['password'], inputs['repeatedPassword']),
+      repeatedPassword: this.validateRepeatedPassword(inputs['password'], inputs['repeatedPassword'])
+    };
     const classes = [];
     classes.push(Styles['form']);
     return (
@@ -103,7 +132,7 @@ class AccountForm extends Component {
             {(() => {
               const itemClasses = [Styles['item']];
               itemClasses.push(Styles['size--full']);
-              if (submitting && !this.validateFullName(inputs['fullName'])) itemClasses.push(Styles['theme--error']);
+              if (submitting && validations['fullName'] !== true) itemClasses.push(Styles['theme--error']);
               return (
                 <div className={itemClasses.join(' ')}>
                   <div className={Styles['field']}>
@@ -119,7 +148,7 @@ class AccountForm extends Component {
                       />
                     </div>
                   </div>
-                  {submitting && (
+                  {(submitting && validations['fullName'] !== true) && (
                   <div className={Styles['note']}>
                     Please Enter your full name
                   </div>
@@ -130,7 +159,7 @@ class AccountForm extends Component {
             {(() => {
               const itemClasses = [Styles['item']];
               itemClasses.push(Styles['size--full']);
-              if (submitting && !this.validateBusinessEmail(inputs['businessEmail'])) itemClasses.push(Styles['theme--error']);
+              if (submitting && validations['businessEmail'] !== true) itemClasses.push(Styles['theme--error']);
               return (
                 <div className={itemClasses.join(' ')}>
                   <div className={Styles['field']}>
@@ -146,7 +175,7 @@ class AccountForm extends Component {
                       />
                     </div>
                   </div>
-                  {submitting && (
+                  {(submitting && validations['businessEmail'] !== true) && (
                   <div className={Styles['note']}>
                     Please Enter your business email
                   </div>
@@ -156,7 +185,7 @@ class AccountForm extends Component {
             })()}
             {(() => {
               const itemClasses = [Styles['item']];
-              if (submitting && !this.validateCountry(inputs['country'])) itemClasses.push(Styles['theme--error']);
+              if (submitting && validations['country'] !== true) itemClasses.push(Styles['theme--error']);
               return (
                 <div className={itemClasses.join(' ')}>
                   <div className={Styles['field']}>
@@ -165,17 +194,18 @@ class AccountForm extends Component {
                     </div>
                     <div className={Styles['input']}>
                       <select
-                        className={Styles['status--empty']}
-                        defaultValue=""
+                        className={!inputs['country'] ? Styles['status--empty'] : ''}
                         value={inputs['country']}
                         onChange={this.handleCountryChange}
                       >
                         <option value="" hidden>Select Your country</option>
-                        <option value="egypt">Egypt</option>
+                        {Object.values(countries.all).map(_country => (
+                          <option key={_country['iso2']} value={_country['iso2']}>{_country['name']}</option>
+                        ))}
                       </select>
                     </div>
                   </div>
-                  {submitting && (
+                  {(submitting && validations['country'] !== true) && (
                   <div className={Styles['note']}>
                     Please Select your country
                   </div>
@@ -186,7 +216,7 @@ class AccountForm extends Component {
             {(() => {
               const itemClasses = [Styles['item']];
               itemClasses.push(Styles['type--prefix']);
-              if (submitting && !this.validatePhoneNumber(inputs['phoneNumber'])) itemClasses.push(Styles['theme--error']);
+              if (submitting && validations['phoneNumber'] !== true) itemClasses.push(Styles['theme--error']);
               return (
                 <div className={itemClasses.join(' ')}>
                   <div className={Styles['field']}>
@@ -205,7 +235,7 @@ class AccountForm extends Component {
                       />
                     </div>
                   </div>
-                  {submitting && (
+                  {(submitting && validations['phoneNumber'] !== true) && (
                   <div className={Styles['note']}>
                     Please Enter your phone number
                   </div>
@@ -216,7 +246,7 @@ class AccountForm extends Component {
             {(() => {
               const itemClasses = [Styles['item']];
               itemClasses.push(Styles['size--full']);
-              if (submitting && !this.validatePassword(inputs['password'])) itemClasses.push(Styles['theme--error']);
+              if (submitting && validations['password'] !== true) itemClasses.push(Styles['theme--error']);
               return (
                 <div className={itemClasses.join(' ')}>
                   <div className={Styles['field']}>
@@ -225,14 +255,14 @@ class AccountForm extends Component {
                     </div>
                     <div className={Styles['input']}>
                       <input
-                        type="text"
+                        type="password"
                         placeholder="Enter Your password"
                         value={inputs['password']}
                         onChange={this.handlePasswordChange}
                       />
                     </div>
                   </div>
-                  {submitting && (
+                  {(submitting && validations['password'] === 1) && (
                   <div className={Styles['note']}>
                     Please Enter your password
                   </div>
@@ -243,7 +273,7 @@ class AccountForm extends Component {
             {(() => {
               const itemClasses = [Styles['item']];
               itemClasses.push(Styles['size--full']);
-              if (submitting && !this.validateRepeatedPassword(inputs['repeatedPassword'])) itemClasses.push(Styles['theme--error']);
+              if (submitting && validations['repeatedPassword'] !== true) itemClasses.push(Styles['theme--error']);
               return (
                 <div className={itemClasses.join(' ')}>
                   <div className={Styles['field']}>
@@ -252,16 +282,27 @@ class AccountForm extends Component {
                     </div>
                     <div className={Styles['input']}>
                       <input
-                        type="text"
+                        type="password"
                         placeholder="Enter Your password again"
                         value={inputs['repeatedPassword']}
                         onChange={this.handleRepeatedPasswordChange}
                       />
                     </div>
                   </div>
-                  {submitting && (
+                  {(submitting && validations['repeatedPassword'] !== true) && (
                   <div className={Styles['note']}>
-                    Please Enter your password again
+                    {(() => {
+                      switch (validations['repeatedPassword']) {
+                        case 1:
+                          return 'Please Enter your password again';
+                        case 2:
+                          return 'Please Enter matched password';
+                        case 3:
+                          return 'Please make sure that you password at least 6 digits';
+                        default:
+                          return '';
+                      }
+                    })()}
                   </div>
                   )}
                 </div>
@@ -272,7 +313,7 @@ class AccountForm extends Component {
         <div className={Styles['footer']}>
           <div className={Styles['links']}>
             <div className={Styles['link']}>
-              <a href="">Back to login</a>
+              <a href="/">Back to login</a>
             </div>
           </div>
           <div className={Styles['options']}>
