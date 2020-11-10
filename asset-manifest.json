@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/SSRT/static/css/main.04522251.chunk.css",
-    "main.js": "/SSRT/static/js/main.a13bd665.chunk.js",
-    "main.js.map": "/SSRT/static/js/main.a13bd665.chunk.js.map",
+    "main.css": "/SSRT/static/css/main.5dea05ad.chunk.css",
+    "main.js": "/SSRT/static/js/main.17111751.chunk.js",
+    "main.js.map": "/SSRT/static/js/main.17111751.chunk.js.map",
     "runtime-main.js": "/SSRT/static/js/runtime-main.9270a219.js",
     "runtime-main.js.map": "/SSRT/static/js/runtime-main.9270a219.js.map",
-    "static/js/2.c08dd007.chunk.js": "/SSRT/static/js/2.c08dd007.chunk.js",
-    "static/js/2.c08dd007.chunk.js.map": "/SSRT/static/js/2.c08dd007.chunk.js.map",
+    "static/js/2.639f4923.chunk.js": "/SSRT/static/js/2.639f4923.chunk.js",
+    "static/js/2.639f4923.chunk.js.map": "/SSRT/static/js/2.639f4923.chunk.js.map",
     "static/js/3.0dca1483.chunk.js": "/SSRT/static/js/3.0dca1483.chunk.js",
     "static/js/3.0dca1483.chunk.js.map": "/SSRT/static/js/3.0dca1483.chunk.js.map",
     "index.html": "/SSRT/index.html",
-    "static/css/main.04522251.chunk.css.map": "/SSRT/static/css/main.04522251.chunk.css.map",
-    "static/js/2.c08dd007.chunk.js.LICENSE.txt": "/SSRT/static/js/2.c08dd007.chunk.js.LICENSE.txt",
+    "static/css/main.5dea05ad.chunk.css.map": "/SSRT/static/css/main.5dea05ad.chunk.css.map",
+    "static/js/2.639f4923.chunk.js.LICENSE.txt": "/SSRT/static/js/2.639f4923.chunk.js.LICENSE.txt",
     "static/media/blue-mailbox.791144d7.jpg": "/SSRT/static/media/blue-mailbox.791144d7.jpg",
     "static/media/loader.8a9de4a8.gif": "/SSRT/static/media/loader.8a9de4a8.gif"
   },
   "entrypoints": [
     "static/js/runtime-main.9270a219.js",
-    "static/js/2.c08dd007.chunk.js",
-    "static/css/main.04522251.chunk.css",
-    "static/js/main.a13bd665.chunk.js"
+    "static/js/2.639f4923.chunk.js",
+    "static/css/main.5dea05ad.chunk.css",
+    "static/js/main.17111751.chunk.js"
   ]
 }
