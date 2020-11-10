@@ -209,6 +209,11 @@
       .note {
         font-weight: bold;
         color: $highlightedColor;
+        .link {
+          cursor: pointer;
+          text-decoration: underline;
+          color: $primaryColor;
+        }
       }
       .description {
         text-align: center;

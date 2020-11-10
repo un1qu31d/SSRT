@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Styles from './index.module.scss';
+import csc from 'country-state-city';
 import blueMailBox from './blue-mailbox.jpg';
 import loader from './loader.gif';
 
@@ -10,11 +11,14 @@ class DoneForm extends Component {
       loading: true,
       sending: false
     };
+    this.handleSendData = this.handleSendData.bind(this);
   }
 
-  componentDidMount() {
+  sendData() {
     const {inputs} = this.props;
-    var formdata = new FormData();
+    const countryID = (csc.getAllCountries().find(_country => _country['sortname'] === inputs['company']['country']) ?? {id: ''})['id'];
+    const cityID = (csc.getStatesOfCountry(countryID).find(_city => _city['name'] === inputs['company']['city']) ?? {id: ''})['id'];
+    const formdata = new FormData();
     formdata.append("user_full_name", inputs['account']['fullName']);
     formdata.append("user_email", inputs['account']['businessEmail']);
     formdata.append("user_phone", inputs['account']['phoneNumber']);
@@ -29,10 +33,9 @@ class DoneForm extends Component {
     formdata.append("company_business_email", inputs['company']['businessEmail']);
     formdata.append("company_phone", inputs['company']['phoneNumber']);
     formdata.append("company_extra_data[phone]", inputs['company']['altPhoneNumber']);
-    formdata.append("company_country_id", inputs['company']['country']);
-    formdata.append("company_city_id", inputs['company']['city']);
+    formdata.append("company_country_id", countryID);
+    formdata.append("company_city_id", cityID);
     // formdata.append("company_avatar", "", "");
-
     fetch("https://id.safav2.io.safavisa.com/register", {
       method: 'POST',
       body: formdata,
@@ -53,6 +56,19 @@ class DoneForm extends Component {
         sending: false
       }));
     });
+  }
+
+  handleSendData() {
+    this.setState(_state => ({
+      ..._state,
+      loading: true,
+      sending: false
+    }));
+    this.sendData();
+  }
+
+  componentDidMount() {
+    this.sendData();
   }
 
   render() {
@@ -81,7 +97,7 @@ class DoneForm extends Component {
             </>
             ) : (
             <div className={Styles['note']}>
-              There is an error happens please try again later 
+              There is an error happens please <span className={Styles['link']} onClick={this.handleSendData}>try</span> again later 
             </div>
             )}
           </div>
