@@ -44,7 +44,6 @@ class CompanyForm extends Component {
   }
 
   handleBack() {
-    const {submitting, countryCode} = this.state;
     const {actions} = this.props;
     actions.previousStep();
   }

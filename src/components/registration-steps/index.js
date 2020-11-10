@@ -135,6 +135,7 @@ class RegistrationSteps extends Component {
                     }}
                     description={inputs['account']['businessEmail']}
                   />
+                default:
               }
             })()}
           </section>

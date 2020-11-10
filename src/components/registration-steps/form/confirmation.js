@@ -46,7 +46,7 @@ class ConfirmationForm extends Component {
         <div className={Styles['main']}>
           <div className={Styles['message']}>
             <div className={Styles['image']}>
-              <img src={blueMailBox} />
+              <img src={blueMailBox} alt="" />
             </div>
             <div className={Styles['title']}>
               We will send a message for this e-mail
