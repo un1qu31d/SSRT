@@ -2,7 +2,7 @@
   "name": "ssrt",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://un1qu31d.github.io/ssrt",
+  "homepage": "https://un1qu31d.github.io/SSRT",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
