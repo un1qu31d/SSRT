@@ -1,0 +1,23 @@
+@import '../../../../config.scss';
+
+.input {
+  position: relative;
+  .options {
+    position: absolute;
+    top: calc(50% - 12px);
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    margin: -4px;
+    .option {
+      cursor: pointer;
+      margin: 4px;
+      height: 24px;
+      font-size: 16px;
+      color: #d4d4d4;
+    &.status--active {
+      color: $primaryColor;
+    }
+    }
+  }
+}

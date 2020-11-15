@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Styles from './index.module.scss';
 import validator from 'validator';
 import countries from 'country-list-js';
+import PasswordInput from './inputs/password';
 
 class AccountForm extends Component {
   constructor(props) {
@@ -254,8 +255,7 @@ class AccountForm extends Component {
                       PASSWORD
                     </div>
                     <div className={Styles['input']}>
-                      <input
-                        type="password"
+                      <PasswordInput
                         placeholder="Enter Your password"
                         value={inputs['password']}
                         onChange={this.handlePasswordChange}
@@ -281,8 +281,7 @@ class AccountForm extends Component {
                       REPEAT PASSWORD
                     </div>
                     <div className={Styles['input']}>
-                      <input
-                        type="password"
+                      <PasswordInput
                         placeholder="Enter Your password again"
                         value={inputs['repeatedPassword']}
                         onChange={this.handleRepeatedPasswordChange}
